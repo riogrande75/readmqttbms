@@ -1,19 +1,19 @@
 <?php
 $debug=0;
-$sh_bms1 = shmop_open(0x4801, "c", 0777, 57);
+$sh_bms1 = shmop_open(0x4801, "c", 0777, 57); // create a shared memory object for the final string
 if (!$sh_bms1) {
     echo "Couldn't open shared memory segment\n";
 }
 
-shmop_write($sh_bms1,"^D054BMS################################################", 0);
+shmop_write($sh_bms1,"^D054BMS################################################", 0); // fill shmop initially
 
 $client = new Mosquitto\Client();
 $client->onConnect('connect');
 $client->onDisconnect('disconnect');
 $client->onSubscribe('subscribe');
 $client->onMessage('message');
-$client->connect("192.168.1.1", 1883, 60);
-$client->subscribe('BMS_B/#', 1);
+$client->connect("192.168.x.y", 1883, 60); // mqtt server+port
+$client->subscribe('BMS_A/#', 1); // mqtt topic to subscribe
 
 while (true) {
         $client->loop();
