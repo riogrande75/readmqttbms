@@ -62,14 +62,14 @@ function message($message) {
         //BMS MaxChgCurr, tbd
         shmop_write($sh_bms1, ",1500", 38); //150A static
 
-        //BMS BatStopDiscFlag, tbd
+        //BMS BatStopDiscFlag
         if(strpos($message->topic, "Discharge")){
                 $bmsdischargeflag = $message->payload;
                 if($bmsdischargeflag == "on") $bmsdischarge=0;
                 if($bmsdischargeflag == "off") $bmsdischarge=1;
                 shmop_write($sh_bms1, ",".$bmsdischarge, 43);
         }
-        //BMS BatStopChaFlag, tbd
+        //BMS BatStopChaFlag
         if(strpos($message->topic, "Charge") && ($message->payload == "on" || $message->payload == "off")) {
                 $bmschargeflag = $message->payload;
                 if($bmschargeflag == "on") $bmscharge = 0;
