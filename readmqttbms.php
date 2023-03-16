@@ -42,13 +42,13 @@ function message($message) {
                 if($debug) echo "PERC: $bmsperc \n";
                 shmop_write($sh_bms1, ",".paddings($bmsperc,3), 12);
                 }
-        if(strpos($message->topic, "Charge_Current")){
+    if(strpos($message->topic, "Charge_Current")){
                 $bmscurr = $message->payload;
-                if($debug) echo "STROM: $bmscurr \n";
-                $bmscurr = substr(round($bmscurr),-4);
-                $bmscurr = str_replace("-","0",$bmscurr);
+                if($debug) echo "STROM1: $bmscurr \n";
                 if($bmscurr < 0) $bmsdir = 1;
                 if($bmscurr >=0) $bmsdir = 0;
+                $bmscurr = substr(round($bmscurr),-4);
+                $bmscurr = str_replace("-","0",$bmscurr);
                 shmop_write($sh_bms1, ",".$bmsdir.",".paddings($bmscurr,4), 16);
                 }
         //BMS warning code, tbd
